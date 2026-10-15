@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moi & Val — Sistema Financiero, Espacio & Metas 2026</title>
+  <meta name="theme-color" content="#070d18">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Finanzas Moi">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="styles.css?v=20261014_premium">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+  <!-- HEADER CORPORATIVO CON TASAS EN VIVO Y SUELDO -->
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-badge"><i class="fas fa-coins"></i></div>
+      <div>
+        <h1 class="brand-title">Moi & Val — Control Financiero & Hogar</h1>
+        <p class="brand-sub">Presupuesto Inteligente, Liquidación de Deudas & Nutrición 2026-2027</p>
+      </div>
+    </div>
+
+    <!-- BANNER DE TASAS EN VIVO Y SALARIOS -->
+    <div class="rates-bar">
+      <div class="rate-item" title="Tasa oficial del Banco Central de Venezuela">
+        <span class="rate-label">Tasa BCV:</span>
+        <div class="rate-input-group">
+          <input type="number" id="tasaBcv" value="870" step="1">
+          <span class="rate-unit">Bs/$</span>
+        </div>
+      </div>
+      <div class="rate-item" title="Tasa promedio P2P Binance en Venezuela">
+        <span class="rate-label">Binance P2P:</span>
+        <div class="rate-input-group">
+          <input type="number" id="tasaBinance" value="1015" step="1">
+          <span class="rate-unit">Bs/$</span>
+        </div>
+      </div>
+      <div class="rate-item" title="Ingreso mensual neto de Moisés (Airtek)">
+        <span class="rate-label">Sueldo Moi ($):</span>
+        <div class="rate-input-group">
+          <input type="number" id="inpSalaryMoi" value="600" step="10">
+          <span class="rate-unit">$</span>
+        </div>
+      </div>
+      <div class="rate-item" title="Ingreso mensual neto de Valeria">
+        <span class="rate-label">Ingreso Val ($):</span>
+        <div class="rate-input-group">
+          <input type="number" id="inpSalaryVal" value="200" step="10">
+          <span class="rate-unit">$</span>
+        </div>
+      </div>
+      <button class="btn-primary btn-sm" id="btnBackupSync" style="background:linear-gradient(135deg, #0284c7, #2563eb); border:none; box-shadow:0 2px 10px rgba(37,99,235,0.3);">
+        <i class="fas fa-cloud-upload-alt"></i> Respaldo & Nube
+      </button>
+      <button class="btn-primary btn-sm" id="btnInstallPwa" style="background:linear-gradient(135deg, #059669, #10b981); border:none; box-shadow:0 2px 10px rgba(16,185,129,0.3);">
+        <i class="fas fa-mobile-alt"></i> Instalar App
+      </button>
+      <button class="btn-primary btn-sm" id="btnHelpModal" style="background:#1e293b; border:1px solid rgba(255,255,255,0.15); box-shadow:none;">
+        <i class="fas fa-question-circle"></i> ¿Cómo Funciona?
+      </button>
+    </div>
+    <input type="file" id="fileBackupInput" accept=".json" style="display:none;">
+  </header>
+
+  <!-- NAVEGACIÓN POR PESTAÑAS -->
+  <nav class="nav-tabs">
+    <button class="nav-btn active" data-tab="tab-personal">
+      <i class="fas fa-user-shield"></i> Finanzas Moi (Cero Deudas)
+    </button>
+    <button class="nav-btn" data-tab="tab-cronograma">
+      <i class="fas fa-calendar-alt"></i> Cronograma & Fechas de Pago
+    </button>
+    <button class="nav-btn" data-tab="tab-nutricion">
+      <i class="fas fa-apple-alt"></i> Nutrición & Mercado Digno
+    </button>
+    <button class="nav-btn" data-tab="tab-espacio">
+      <i class="fas fa-couch"></i> Mi Espacio & Setup (Portátil)
+    </button>
+    <button class="nav-btn" data-tab="tab-pareja">
+      <i class="fas fa-heart"></i> Metas de Pareja (Moi & Val)
+    </button>
+    <button class="nav-btn" data-tab="tab-conversor">
+      <i class="fas fa-calculator"></i> Conversor de Moneda
+    </button>
+  </nav>
+
+  <main class="main-container">
+
+    <!-- GUÍA INTELIGENTE RESUMIDA (CÓMO FUNCIONA ESTE MES) -->
+    <div class="guide-banner">
+      <div class="guide-info">
+        <i class="fas fa-lightbulb guide-icon"></i>
+        <div>
+          <div class="guide-title">Estrategia Bola de Nieve — Octubre 2026</div>
+          <div class="guide-text">Tu sueldo de $600 cubre vida ($200) + compromisos prioritarios ($280) y te deja $120 libres.</div>
+        </div>
+      </div>
+      <div class="guide-steps">
+        <div class="guide-pill"><i class="fas fa-check-circle" style="color:#10b981;"></i> <strong>1.</strong> Protege $50/sem vida</div>
+        <div class="guide-pill"><i class="fas fa-check-circle" style="color:#38bdf8;"></i> <strong>2.</strong> Paga por quincena límite</div>
+        <div class="guide-pill"><i class="fas fa-check-circle" style="color:#a78bfa;"></i> <strong>3.</strong> Cero deudas en Enero 2027</div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         TAB 1: PLAN PERSONAL MOISÉS (CERO DEUDAS)
+         ========================================== -->
+    <section id="tab-personal" class="tab-content active">
+
+      <!-- FLUJO DINÁMICO DE TU SUELDO (BARRA VISUAL) -->
+      <div class="flow-card">
+        <div class="flow-header">
+          <div class="flow-title">
+            <i class="fas fa-chart-pie" style="color:var(--accent-sky);"></i> Distribución Real de tu Sueldo este Mes ($600.00)
+          </div>
+          <span style="font-size:0.85rem; color:var(--text-muted);" id="flowMonthLabel">Octubre 2026</span>
+        </div>
+
+        <div class="flow-bar-wrapper" title="Proporción de Vida, Deudas y Dinero Libre">
+          <div class="flow-bar-segment flow-seg-vida" id="barSegVida" style="width: 33.3%;"></div>
+          <div class="flow-bar-segment flow-seg-deudas" id="barSegDeudas" style="width: 46.7%;"></div>
+          <div class="flow-bar-segment flow-seg-ahorro" id="barSegAhorro" style="width: 20.0%;"></div>
+        </div>
+
+        <div class="flow-legend">
+          <div class="flow-stat">
+            <div class="flow-stat-dot dot-vida"></div>
+            <div>
+              <div class="flow-stat-label">Gastos de Vida (Comida + Pasajes)</div>
+              <div class="flow-stat-val" id="flowStatVida">$200.00 <span style="font-size:0.8rem; font-weight:normal; color:#94a3b8;">($50/sem)</span></div>
+            </div>
+          </div>
+
+          <div class="flow-stat">
+            <div class="flow-stat-dot dot-deudas"></div>
+            <div>
+              <div class="flow-stat-label">Compromisos / Cuotas del Mes</div>
+              <div class="flow-stat-val" id="flowStatDeudas">$280.00 <span style="font-size:0.8rem; font-weight:normal; color:#94a3b8;">(Universidad + Préstamos)</span></div>
+            </div>
+          </div>
+
+          <div class="flow-stat">
+            <div class="flow-stat-dot dot-ahorro"></div>
+            <div>
+              <div class="flow-stat-label">Dinero Libre en Mano / Reserva</div>
+              <div class="flow-stat-val" id="flowStatAhorro" style="color:#10b981;">$120.00 <span style="font-size:0.8rem; font-weight:normal; color:#10b981;">(Flujo Positivo)</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPIS RESUMEN -->
+      <div class="kpi-grid">
+        <div class="kpi-card highlight-card">
+          <div class="kpi-icon"><i class="fas fa-wallet"></i></div>
+          <div>
+            <div class="kpi-label">Ingreso Mensual Moi</div>
+            <div class="kpi-val" id="kpiMoiIngreso">$600.00</div>
+            <div class="kpi-help">Pago mensual Airtek (Tasa BCV)</div>
+          </div>
+        </div>
+
+        <div class="kpi-card danger-card">
+          <div class="kpi-icon"><i class="fas fa-hand-holding-usd"></i></div>
+          <div>
+            <div class="kpi-label">Cuotas de este Mes</div>
+            <div class="kpi-val" id="moiCompromisosMes">$0.00</div>
+            <div class="kpi-help" id="moiDeudasHelp">Universidad + Préstamos activos</div>
+          </div>
+        </div>
+
+        <div class="kpi-card warning-card">
+          <div class="kpi-icon"><i class="fas fa-shopping-basket"></i></div>
+          <div>
+            <div class="kpi-label">Asignación Semanal de Vida</div>
+            <div class="kpi-val" id="moiGastosVidaMes">$200.00</div>
+            <div class="kpi-help">$15 pasajes + $25 mercado + $10 imprevistos</div>
+          </div>
+        </div>
+
+        <div class="kpi-card success-card">
+          <div class="kpi-icon"><i class="fas fa-piggy-bank"></i></div>
+          <div>
+            <div class="kpi-label">Remanente Libre Real</div>
+            <div class="kpi-val" id="moiAhorroLibreMes" style="color:#10b981;">$0.00</div>
+            <div class="kpi-help">Dinero limpio para imprevistos o mejoras</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Presupuesto Semanal de Vida (Editable con 1 Clic) -->
+      <div class="content-panel" style="margin-bottom:24px;">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title"><i class="fas fa-shield-alt" style="color:#f59e0b;"></i> Presupuesto Intocable de Vida ($50 / semana)</h2>
+            <p class="panel-desc">Apartado cada semana para que nunca te falte pasaje para ir a trabajar ni comida sana.</p>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:14px;">
+          <div>
+            <label style="font-size:0.82rem; color:var(--text-muted); font-weight:600;">🚌 Pasajes / Transporte ($/semana):</label>
+            <input type="number" id="inpPasajesSemana" value="15" class="filter-input" style="margin-top:6px;">
+          </div>
+          <div>
+            <label style="font-size:0.82rem; color:var(--text-muted); font-weight:600;">🥩 Comida / Mercado ($/semana):</label>
+            <input type="number" id="inpComidaSemana" value="25" class="filter-input" style="margin-top:6px;">
+          </div>
+          <div>
+            <label style="font-size:0.82rem; color:var(--text-muted); font-weight:600;">💊 Imprevistos Personales ($/semana):</label>
+            <input type="number" id="inpOtrosSemana" value="10" class="filter-input" style="margin-top:6px;">
+          </div>
+          <div style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:center;">
+            <span style="font-size:0.75rem; color:#38bdf8; font-weight:700; text-transform:uppercase;">Apartado Semanal Fijo:</span>
+            <span style="font-size:1.4rem; font-weight:800; color:#fff;" id="dispTotalSemanal">$50.00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabla de Deudas con Filtro por Mes -->
+      <div class="content-panel">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title"><i class="fas fa-list-check" style="color:var(--accent-sky);"></i> Inventario de Compromisos & Cuotas</h2>
+            <p class="panel-desc">Haz clic en cualquier celda para editar el monto, concepto o fecha. Usa los botones para ver el mes que quieras.</p>
+          </div>
+          <button class="btn-primary" id="btnNuevaDeuda"><i class="fas fa-plus"></i> Añadir Compromiso</button>
+        </div>
+
+        <!-- Filtros Rápidos por Mes -->
+        <div class="filter-pills">
+          <button class="filter-pill-btn active" data-filter="all">Todas las Deudas</button>
+          <button class="filter-pill-btn" data-filter="Octubre 2026">Octubre 2026 (Prioridad Actual)</button>
+          <button class="filter-pill-btn" data-filter="Noviembre 2026">Noviembre 2026</button>
+          <button class="filter-pill-btn" data-filter="Diciembre 2026">Diciembre 2026</button>
+          <button class="filter-pill-btn" data-filter="Enero 2027">Enero 2027 (Última Cuota)</button>
+        </div>
+
+        <div class="debts-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Concepto / Acreedor</th>
+                <th>Monto Total ($)</th>
+                <th>Tasa Pago</th>
+                <th>Cuota Mensual ($)</th>
+                <th>Fecha Límite de Pago</th>
+                <th>Estado</th>
+                <th style="text-align: center;">Acción</th>
+              </tr>
+            </thead>
+            <tbody id="debtsTableBody"></tbody>
+            <tfoot>
+              <tr class="table-total-row">
+                <td><strong>TOTAL COMPROMISOS</strong></td>
+                <td id="totDeudaGlobal"><strong>$0.00</strong></td>
+                <td></td>
+                <td id="totCuotaGlobal" style="color:#ef4444;"><strong>$0.00</strong></td>
+                <td colspan="3"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TAB 2: CRONOGRAMA & FECHAS DE PAGO
+         ========================================== -->
+    <section id="tab-cronograma" class="tab-content">
+      <div class="content-panel">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title"><i class="fas fa-calendar-check" style="color:#10b981;"></i> Calendario & Desembolsos por Quincena</h2>
+            <p class="panel-desc">Cuánto dinero debes tener apartado para cada fecha de pago exacta para no quedarte sin pasaje ni comida.</p>
+          </div>
+        </div>
+
+        <div class="timeline-grid" id="timelineContainer"></div>
+
+        <div style="margin-top: 28px;">
+          <div class="panel-header" style="margin-bottom: 12px;">
+            <div>
+              <h3 style="font-size: 1.1rem; color: var(--text-main); font-weight: 700;">
+                <i class="fas fa-clock" style="color: #38bdf8;"></i> Detalle de Quincenas Límite (USD y Bolívares BCV)
+              </h3>
+              <p class="panel-desc">Con este monto en cuenta puedes pagar puntualmente tus compromisos.</p>
+            </div>
+          </div>
+
+          <div class="debts-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Fecha de Corte / Pago</th>
+                  <th>Compromisos Incluidos</th>
+                  <th>Total Requerido ($)</th>
+                  <th>Equivalente en Bs (Tasa BCV)</th>
+                  <th>Disponibilidad Semanal Restante</th>
+                </tr>
+              </thead>
+              <tbody id="fechasPagoTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TAB 3: NUTRICIÓN & MERCADO DIGNO
+         ========================================== -->
+    <section id="tab-nutricion" class="tab-content">
+      <div class="content-panel" style="border-left: 4px solid #10b981;">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title"><i class="fas fa-apple-whole" style="color:#10b981;"></i> Plan de Nutrición Digna (Salir del Modo Pan)</h2>
+            <p class="panel-desc">Lista de compras semanales con precios reales en Maracaibo (~$25/semana) para rendir al máximo sin desgastarte.</p>
+          </div>
+          <button class="btn-primary" id="btnResetMercado" style="background:#10b981;">
+            <i class="fas fa-redo"></i> Iniciar Nueva Semana
+          </button>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card success-card">
+            <div class="kpi-icon"><i class="fas fa-drumstick-bite"></i></div>
+            <div>
+              <div class="kpi-label">Proteínas Semanales ($)</div>
+              <div class="kpi-val">$16.00</div>
+              <div class="kpi-help">Huevos, pollo, carne molida, queso</div>
+            </div>
+          </div>
+
+          <div class="kpi-card success-card">
+            <div class="kpi-icon"><i class="fas fa-seedling"></i></div>
+            <div>
+              <div class="kpi-label">Carbohidratos & Víveres ($)</div>
+              <div class="kpi-val">$6.00</div>
+              <div class="kpi-help">Arroz, avena, plátanos, harina</div>
+            </div>
+          </div>
+
+          <div class="kpi-card success-card">
+            <div class="kpi-icon"><i class="fas fa-wallet"></i></div>
+            <div>
+              <div class="kpi-label">Total Presupuesto Mercado</div>
+              <div class="kpi-val" style="color:#10b981;">$25.00 / sem</div>
+              <div class="kpi-help">~$108.00 / mes (100% balanceado)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LISTA INTERACTIVA DE COMPRAS SEMANALES -->
+        <div class="panel-header" style="margin-bottom: 12px;">
+          <div>
+            <h3 style="font-size: 1.05rem; color: var(--text-main); font-weight: 700;">
+              <i class="fas fa-basket-shopping" style="color: #10b981;"></i> Lista de Compras de la Semana (Interactiva)
+            </h3>
+            <p class="panel-desc">Marca con un check los alimentos según los vayas comprando.</p>
+          </div>
+        </div>
+
+        <div class="debts-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 80px; text-align: center;">¿Listo?</th>
+                <th>Alimento / Vértice</th>
+                <th>Porción / Frecuencia</th>
+                <th>Costo Est. ($)</th>
+                <th>Costo Est. (Bs BCV)</th>
+              </tr>
+            </thead>
+            <tbody id="mercadoTableBody"></tbody>
+            <tfoot>
+              <tr class="table-total-row">
+                <td colspan="3"><strong>TOTAL MERCADO SEMANAL ESTIMADO</strong></td>
+                <td id="totMercadoDolares"><strong>$25.00</strong></td>
+                <td id="totMercadoBs"><strong>0.00 Bs</strong></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TAB 4: MI ESPACIO & SETUP (PORTÁTIL)
+         ========================================== -->
+    <section id="tab-espacio" class="tab-content">
+      <div class="content-panel">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title"><i class="fas fa-couch" style="color:#a78bfa;"></i> Mi Espacio & Setup (Bienes 100% Transportables)</h2>
+            <p class="panel-desc">Inversiones que mejoran tu descanso y postura hoy, y que te llevas intactas al mudarte.</p>
+          </div>
+          <button class="btn-primary" id="btnNuevoItemEspacio"><i class="fas fa-plus"></i> Añadir Mejora</button>
+        </div>
+
+        <div class="debts-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Elemento / Bien Portátil</th>
+                <th>Costo Estimado ($)</th>
+                <th>Prioridad</th>
+                <th>Fecha Objetivo</th>
+                <th>Estado</th>
+                <th style="text-align: center;">Acción</th>
+              </tr>
+            </thead>
+            <tbody id="espacioTableBody"></tbody>
+            <tfoot>
+              <tr class="table-total-row">
+                <td><strong>TOTAL INVERSIÓN SETUP / ESPACIO</strong></td>
+                <td id="totEspacioCost"><strong>$0.00</strong></td>
+                <td colspan="4"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <!-- Banner de Asesoría de Espacio -->
+        <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.3); border-radius:14px; padding:20px; margin-top:24px;">
+          <h4 style="color:#38bdf8; margin-bottom:8px; font-size:1.05rem;">
+            <i class="fas fa-camera"></i> Asesoría de Distribución Ergonómica
+          </h4>
+          <p style="color:var(--text-muted); font-size:0.88rem; line-height:1.6;">
+            Puedes subir o enviarme fotos o un video de tu habitación / apartamento tipo estudio (incluso si movieron nevera, escritorio o estantes).
+            Analizaremos la orientación de la luz, ventilación, gestión de cables y paso libre para que tu espacio rinda al 100% con mínima inversión.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TAB 5: METAS DE PAREJA (MOI & VAL 75/25)
+         ========================================== -->
+    <section id="tab-pareja" class="tab-content">
+      <div class="content-panel">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title"><i class="fas fa-heart" style="color:#f43f5e;"></i> Enseres y Metas del Hogar (Moi & Val)</h2>
+            <p class="panel-desc">Aporte proporcional a ingresos: Moisés 75% ($600) y Valeria 25% ($200).</p>
+          </div>
+          <button class="btn-primary" id="btnNuevoProducto"><i class="fas fa-plus"></i> Añadir Meta</button>
+        </div>
+
+        <div class="debts-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Artículo / Meta</th>
+                <th>Costo Total ($)</th>
+                <th>Moi (75%)</th>
+                <th>Val (25%)</th>
+                <th>Estado</th>
+                <th style="text-align: center;">Acción</th>
+              </tr>
+            </thead>
+            <tbody id="productsTableBody"></tbody>
+            <tfoot>
+              <tr class="table-total-row">
+                <td><strong>TOTAL METAS</strong></td>
+                <td id="totProdCost"><strong>$0.00</strong></td>
+                <td id="totProdMoi" style="color:#60a5fa;"><strong>$0.00</strong></td>
+                <td id="totProdVal" style="color:#f472b6;"><strong>$0.00</strong></td>
+                <td colspan="2"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TAB 6: CONVERSOR EN TIEMPO REAL
+         ========================================== -->
+    <section id="tab-conversor" class="tab-content">
+      <div class="content-panel">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title"><i class="fas fa-calculator" style="color:var(--accent-sky);"></i> Calculadora de Brecha BCV vs. Binance P2P</h2>
+            <p class="panel-desc">Calcula al instante cuánto recibes en Bolívares y cuál es la brecha cambiaria real.</p>
+          </div>
+        </div>
+
+        <div style="max-width: 520px; margin: 0 auto; padding: 20px 0;">
+          <label style="font-size:0.9rem; color:var(--text-muted); font-weight:700;">Monto en Dólares ($ USD):</label>
+          <input type="number" id="convUsd" value="100" class="filter-input" style="font-size:1.4rem; font-weight:800; padding:12px; margin-top:8px;">
+
+          <div style="margin-top:24px; display:flex; flex-direction:column; gap:14px;">
+            <div style="background:rgba(15,23,42,0.8); border:1px solid var(--border-subtle); padding:16px; border-radius:12px; display:flex; justify-content:space-between; align-items:center;">
+              <span style="color:var(--text-muted); font-weight:600;">Total a Tasa BCV:</span>
+              <strong style="color:#38bdf8; font-size:1.25rem; font-family:var(--font-mono);" id="resBcvBs">0.00 Bs</strong>
+            </div>
+
+            <div style="background:rgba(15,23,42,0.8); border:1px solid var(--border-subtle); padding:16px; border-radius:12px; display:flex; justify-content:space-between; align-items:center;">
+              <span style="color:var(--text-muted); font-weight:600;">Total a Tasa Binance P2P:</span>
+              <strong style="color:#f59e0b; font-size:1.25rem; font-family:var(--font-mono);" id="resBinanceBs">0.00 Bs</strong>
+            </div>
+
+            <div style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); padding:16px; border-radius:12px; display:flex; justify-content:space-between; align-items:center;">
+              <span style="color:#ef4444; font-weight:700;">Diferencia / Brecha Cambiaria:</span>
+              <strong style="color:#ef4444; font-size:1.25rem; font-family:var(--font-mono);" id="resBrecha">0.00 Bs</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js?v=20261014_premium"></script>
+</body>
+</html>
